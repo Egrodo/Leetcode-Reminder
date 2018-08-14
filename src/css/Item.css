@@ -1,0 +1,36 @@
+.Item {
+  background-color: #fea116;
+  padding: .5em;
+  text-align: right;
+
+  display: grid;
+  grid-template-columns: 1.8fr 0.2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 1em 1em;
+  grid-template-areas: '. .';
+}
+
+.Item:not(:last-of-type) {
+  border-bottom: 1px solid #808080;
+}
+
+.Item a {
+  text-decoration: none;
+  color: cornsilk;
+  font-size: 1em; /* TODO: Variable size this */
+  font-weight: 700;
+  user-select: none;
+}
+
+.Item a:hover {
+  text-decoration: underline;
+}
+
+.check {
+  color: #009700;
+  height: 1.3em;
+}
+
+.check:hover {
+  cursor: pointer;
+}
