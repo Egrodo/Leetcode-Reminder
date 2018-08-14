@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   render() {
-    // TODO: Sort them by day.
+    // TODO: Manage the scheduling of such.
     const { data } = this.state;
     return (
       <div className="App">

@@ -20,15 +20,21 @@
   font-size: 1em; /* TODO: Variable size this */
   font-weight: 700;
   user-select: none;
+  overflow: hidden;
 }
 
 .Item a:hover {
   text-decoration: underline;
 }
 
+.svgContainer {
+  display: flex;
+  align-items: center;
+}
+
 .check {
   color: #009700;
-  height: 1.3em;
+  height: 1.3rem;
 }
 
 .check:hover {
