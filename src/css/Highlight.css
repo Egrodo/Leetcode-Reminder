@@ -2,13 +2,7 @@
   margin-top: 1.5em;
 }
 
-.Highlight header {
-  font-size: 1em;
-  font-weight: 400;
-
-}
-
-.Highlight div {
+.Highlight > div {
   margin-top: .5em;
-  box-shadow: 0 0 10px 2px #a86e18;
+  box-shadow: 0 0 10px 2px #ffa724;
 }

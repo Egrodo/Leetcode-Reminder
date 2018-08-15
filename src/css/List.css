@@ -1,3 +1,19 @@
 .List {
-  margin-top: 1em;
+  margin-top: 2em;
+}
+
+.List .itemContainer {
+  max-height: 13.5em;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.itemContainer::-webkit-scrollbar {
+  background-color: #fea116;
+  width: .5em;
+}
+.itemContainer::-webkit-scrollbar-thumb {
+  background-color: #666B7A;
+  width: .1em;
+  border-radius: 1em;
 }

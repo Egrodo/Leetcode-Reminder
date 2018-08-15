@@ -7,16 +7,16 @@ const Highlight = (props) => {
   // TODO: If there's no item, render default.
   return (
     <section className="Highlight">
-      <header>Current:</header>
+      <header className="secondary">Current Task:</header>
       <div>
         <Item item={props.item} />
       </div>
     </section>
   );
-}
+};
 
 Highlight.propTypes = {
-  item: PropTypes.objectOf(PropTypes.string),
+  item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
 };
 
 Highlight.defaultProps = {

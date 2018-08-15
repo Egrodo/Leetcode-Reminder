@@ -5,9 +5,25 @@ import '../css/List.css';
 
 const List = (props) => {
   const { data } = props;
+
+  // Sort by date before rendering.
+  data.sort((a, b) => {
+    if (new Date(a.date) < new Date(b.date)) return -1;
+    return 1;
+  });
+
+  // Sort by done
+  data.sort((a, b) => {
+    if (a.done && !b.done) return 1;
+    return -1;
+  });
+
   return (
     <section className="List">
-      {data.map(item => <Item item={item} key={item.link} />)}
+      <header className="secondary">Other Reminders:</header>
+      <div className="itemContainer">
+        {data.map(item => <Item item={item} key={item.link} />)}
+      </div>
     </section>
   );
 };

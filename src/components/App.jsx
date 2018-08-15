@@ -33,6 +33,9 @@ class App extends Component {
         <header>Leetcode Reminders</header>
         {today ? <Highlight item={today} /> : ''}
         <List data={data} />
+        <p className="footer">
+          made by egrodo
+        </p>
       </div>
     );
   }
