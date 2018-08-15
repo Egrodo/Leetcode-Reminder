@@ -1,13 +1,14 @@
 .Item {
   background-color: #fea116;
+  color: white;
   padding: .5em;
   text-align: right;
 
   display: grid;
-  grid-template-columns: 1.8fr 0.2fr;
+  grid-template-columns: 0.2fr 1.6fr 0.2fr;
   grid-template-rows: 1fr;
-  grid-gap: 1em 1em;
-  grid-template-areas: '. .';
+  gap: 1em 1em;
+  grid-template-areas: '. . .';
 }
 
 .Item:not(:last-of-type) {
@@ -16,8 +17,8 @@
 
 .Item a {
   text-decoration: none;
-  color: cornsilk;
-  font-size: 1em; /* TODO: Variable size this */
+  color: inherit;
+  font-size: 1em;
   font-weight: 700;
   user-select: none;
   overflow: hidden;
@@ -27,7 +28,16 @@
   text-decoration: underline;
 }
 
-.svgContainer {
+.infoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.info {
+  height: 1.8rem;
+}
+
+.checkContainer {
   display: flex;
   align-items: center;
 }
