@@ -18,7 +18,7 @@ class Item extends Component {
 
     const { link, date } = this.props.item;
 
-    let name = /problems[^\/]*\/(.*?)(\/|$)/.exec(link)[1].split('-');
+    let name = /problems[^/]*\/(.*?)(\/|$)/.exec(link)[1].split('-');
     name = name.map(v => `${v[0].toUpperCase()}${v.slice(1)}`).join(' ');
     this.setState({
       name,

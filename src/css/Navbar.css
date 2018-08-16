@@ -1,0 +1,40 @@
+.Navbar {
+  background-color: #222222;
+}
+
+header.title {
+  font-size: 1.5em;
+  color: #fff;
+  padding: .5em;
+}
+
+.navContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: '. . .';
+  margin-top: .7em;
+}
+
+.navItem {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1em;
+  background-color: inherit;
+  border: none;
+  border-bottom: 3px solid transparent;
+}
+
+.navItem:hover {
+  cursor: pointer;
+  border-bottom: 3px solid #fea116;
+}
+
+.navItem.active {
+  border-bottom: 3px solid #fea116;
+  color: #fff;
+}
+
+.navItem:focus {
+  outline: none;
+
+}

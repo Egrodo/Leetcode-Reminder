@@ -6,13 +6,9 @@ body {
   text-align: center;
   width: 20em;
   margin-left: 40vw; /* DEV */
-  padding: 1.5em 1.5em .2em 1.5em;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #fcfcfc;
-}
-
-header {
-  font-size: 2em;
+  /* padding: 1.5em 1.5em .2em 1.5em; */
+  font-family: 'Roboto', sans-serif;
+  background-color: #f1f1f1;
 }
 
 header.secondary {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { isToday } from 'date-fns';
+import Navbar from './Navbar';
 import List from './List';
 import Highlight from './Highlight';
 import Data from '../mock'; // DEV
@@ -30,7 +31,7 @@ class App extends Component {
     const { data, today } = this.state;
     return (
       <div className="App">
-        <header>Leetcode Reminders</header>
+        <Navbar />
         {today ? <Highlight item={today} /> : ''}
         <List data={data} />
         <p className="footer">
