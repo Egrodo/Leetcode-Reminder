@@ -19,7 +19,7 @@ class Main extends Component {
     const { data } = this.props;
     // Check if there's one today.
     for (let i = 0; i < data.length; ++i) {
-      if (isToday(data[i].date)) {
+      if (isToday(data[i].date) && !data[i].done) {
         this.setState({ today: data[i] });
         break;
       }

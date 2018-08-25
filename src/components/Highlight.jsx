@@ -4,6 +4,8 @@ import Item from './Item';
 import '../css/Highlight.css';
 
 const Highlight = props => (
+  // TODO: Onclick for add one button.
+  // TODO: Ensure highlight isn't done.
   <section className="Highlight">
     {props.item
       ? (

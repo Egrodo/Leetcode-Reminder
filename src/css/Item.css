@@ -44,7 +44,7 @@
   font-size: .8em;
 }
 
-.checkContainer {
+.svgContainer {
   display: flex;
   align-items: center;
 }
@@ -54,10 +54,15 @@
   height: 1.5rem;
 }
 
-.check:hover {
+.cross {
+  height: 2rem;
+  color: #F44336;
+}
+
+.check:hover, .cross:hover{
   cursor: pointer;
 }
 
 .Item.done {
-
+  background-color: #ffc773;
 }

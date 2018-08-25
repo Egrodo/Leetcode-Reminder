@@ -36,7 +36,7 @@ class App extends Component {
             case 'main': return <Main data={data} />;
             case 'history': return <History data={data} />;
             case 'new': return <New />;
-            default: return null; // TODO: This
+            default: return <Main data={data} />;
           }
         })()}
         <p className="footer">

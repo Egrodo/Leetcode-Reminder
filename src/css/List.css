@@ -3,7 +3,7 @@
 }
 
 .List .itemContainer {
-  max-height: 13.5em;
+  max-height: 203px; /* HACK: */
   overflow-y: overlay;
   overflow-x: hidden;
 }
