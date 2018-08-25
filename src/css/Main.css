@@ -7,11 +7,6 @@
   box-shadow: 0 0 10px 2px var(--highlight-color);
 }
 
-.noChallenge > header {
-  font-size: 1.3em;
-  font-weight: 600;
-}
-
 .addOne {
   display: inline-block;
   padding: .7em 1.4em;
@@ -41,4 +36,12 @@
 
 .addOne:hover {
   cursor: pointer;
+}
+
+.currentReminders {
+  margin-top: 2em;
+}
+
+.currentReminders .secondary {
+  margin-bottom: .5em;
 }

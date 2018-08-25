@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { distanceInWordsToNow, isToday } from 'date-fns';
+import { differenceInCalendarDays, isToday, isPast } from 'date-fns';
 import '../css/Item.css';
 
 class Item extends Component {
@@ -43,7 +43,13 @@ class Item extends Component {
       subText = 'Done';
     } else if (isToday(date)) {
       subText = 'Today';
-    } else subText = `in ${distanceInWordsToNow(date)}`;
+    } else if (isPast(date)) {
+      const days = differenceInCalendarDays(date, Date.now());
+      subText = `${days} days ago`;
+    } else {
+      const days = differenceInCalendarDays(date, Date.now());
+      subText = `in ${days} day${days > 1 ? 's' : ''}`;
+    }
 
     return (
       <section className={`Item${done ? ' done' : ''}`}>
@@ -56,7 +62,7 @@ class Item extends Component {
           <a href={link} rel="noopener noreferrer" target="_blank" alt={name} title={name}>
             {name}
           </a>
-          <div className="dateContainer">
+          <div className="dateContainer" title={date} alt={date}>
             {subText}
           </div>
         </span>

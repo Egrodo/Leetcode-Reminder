@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import '../css/Navbar.css';
 
 class Navbar extends Component {
@@ -15,6 +16,7 @@ class Navbar extends Component {
     // Change tabs with prop func.
     if (this.state.active !== e.target.id) {
       this.setState({ active: e.target.id });
+      this.props.drillPageType(e.target.id);
     }
   }
 
@@ -22,7 +24,7 @@ class Navbar extends Component {
     // TODO: Animate moving border on hover.
     const { active } = this.state;
     return (
-      <div className="Navbar">
+      <section className="Navbar">
         <header className="title">Leetcode Reminders</header>
         <div className="navContainer">
           <button className={`navItem${active === 'main' ? ' active' : ''}`} id="main" type="button" onClick={this.onClick}>
@@ -35,9 +37,17 @@ class Navbar extends Component {
             New +
           </button>
         </div>
-      </div>
+      </section>
     );
   }
 }
+
+Navbar.propTypes = {
+  drillPageType: PropTypes.func,
+};
+
+Navbar.defaultProps = {
+  drillPageType: (() => { throw new ReferenceError('drillPageType not passed into Navbar'); }),
+};
 
 export default Navbar;

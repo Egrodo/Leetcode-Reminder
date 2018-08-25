@@ -12,6 +12,15 @@ body {
   background-color: #f1f1f1;
 }
 
+section.page {
+  margin-top: 1.5em;
+}
+
+header.primary {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
 header.secondary {
   font-size: 1em;
   font-weight: 400;
@@ -23,7 +32,16 @@ svg {
 
 .footer {
   text-align: right;
-  margin: 1em 0 0 0;
+  padding: .5em .5em .5em 0;
   font-size: .7em;
   color: #1d1d1d;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.footer a:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

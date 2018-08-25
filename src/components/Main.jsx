@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { isToday } from 'date-fns';
 import List from './List';
-import Highlight from './Highlight';
+import Item from './Item';
+import '../css/Main.css';
 
 class Main extends Component {
   constructor(props) {
@@ -29,20 +30,49 @@ class Main extends Component {
   render() {
     const { data, today } = this.state;
     return (
-      <Fragment>
-        <Highlight item={today} />
-        <List data={data} />
-      </Fragment>
+      <section className="Main page">
+        {today
+          ? (
+            <Fragment>
+              <header className="secondary">Current Task:</header>
+              <div className="highlightBox">
+                <Item item={today} />
+              </div>
+            </Fragment>
+          )
+          : (
+            <div className="noChallenge">
+              <header className="primary">No challenge today</header>
+              <button type="button" className="addOne" onClick={this.props.newBtn}>
+                Add one?
+              </button>
+            </div>
+          )
+        }
+        {data.length
+          ? (
+            <section className="currentReminders">
+              <header className="secondary">Current Reminders:</header>
+              <List data={data} />
+            </section>
+          )
+          : (
+            <header className="secondary">No Future Reminders</header>
+          )
+        }
+      </section>
     );
   }
 }
 
 Main.propTypes = {
   data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
+  newBtn: PropTypes.func,
 };
 
 Main.defaultProps = {
   data: null,
+  newBtn: (() => { throw new ReferenceError('newBtn func not passed to Main.'); }),
 };
 
 export default Main;

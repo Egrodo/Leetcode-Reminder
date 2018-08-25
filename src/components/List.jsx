@@ -6,6 +6,8 @@ import '../css/List.css';
 const List = (props) => {
   const { data } = props;
 
+
+  // TODO: Optimize this.
   // Sort by date before rendering.
   data.sort((a, b) => {
     if (new Date(a.date) < new Date(b.date)) return -1;
@@ -20,7 +22,6 @@ const List = (props) => {
 
   return (
     <section className="List">
-      <header className="secondary">Other Reminders:</header>
       <div className="itemContainer">
         {data.map(item => <Item item={item} key={item.link} />)}
       </div>

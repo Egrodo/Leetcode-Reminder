@@ -1,8 +1,4 @@
-.List {
-  margin-top: 2em;
-}
-
-.List .itemContainer {
+.itemContainer {
   max-height: 203px; /* HACK: */
   overflow-y: overlay;
   overflow-x: hidden;
