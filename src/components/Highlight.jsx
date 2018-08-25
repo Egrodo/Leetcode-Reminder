@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import '../css/Highlight.css';
 
-const Highlight = (props) => {
-  // TODO: If there's no item, render default.
-  return (
-    <section className="Highlight">
-      <header className="secondary">Current Task:</header>
-      <div>
-        <Item item={props.item} />
-      </div>
-    </section>
-  );
-};
+const Highlight = props => (
+  <section className="Highlight">
+    {props.item
+      ? (
+        <Fragment>
+          <header className="secondary">Current Task:</header>
+          <div className="highlightBox">
+            <Item item={props.item} />
+          </div>
+        </Fragment>
+      )
+      : (
+        <div className="noChallenge">
+          <header className="secondary">No challenge today</header>
+          <button type="button" className="addOne">
+            Add one?
+          </button>
+        </div>
+      )
+    }
+  </section>
+);
 
 Highlight.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
 };
 
 Highlight.defaultProps = {
-  item: {},
+  item: false,
 };
 
 export default Highlight;

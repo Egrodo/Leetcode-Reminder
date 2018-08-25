@@ -1,5 +1,6 @@
 body {
   background-color: black;
+  --highlight-color: #ffa724;
 }
 
 .App {

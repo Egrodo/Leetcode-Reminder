@@ -30,7 +30,7 @@ class Main extends Component {
     const { data, today } = this.state;
     return (
       <Fragment>
-        {today ? <Highlight item={today} /> : ''}
+        <Highlight item={today} />
         <List data={data} />
       </Fragment>
     );
@@ -38,7 +38,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
 };
 
 Main.defaultProps = {

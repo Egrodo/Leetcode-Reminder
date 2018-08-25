@@ -1,5 +1,5 @@
 .Item {
-  background-color: #fea116;
+  background-color: var(--highlight-color);
   color: white;
   padding: .5em;
   text-align: right;

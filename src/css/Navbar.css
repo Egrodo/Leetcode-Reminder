@@ -26,11 +26,11 @@ header.title {
 
 .navItem:hover {
   cursor: pointer;
-  border-bottom: 3px solid #fea116;
+  border-bottom: 3px solid var(--highlight-color);
 }
 
 .navItem.active {
-  border-bottom: 3px solid #fea116;
+  border-bottom: 3px solid var(--highlight-color);
   color: #fff;
 }
 

@@ -9,7 +9,7 @@
 }
 
 .itemContainer::-webkit-scrollbar {
-  background-color: #fea116;
+  background-color: var(--highlight-color);
   width: .5em;
 }
 .itemContainer::-webkit-scrollbar-thumb {
