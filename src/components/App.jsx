@@ -1,39 +1,44 @@
 import React, { Component } from 'react';
-import { isToday } from 'date-fns';
 import Navbar from './Navbar';
-import List from './List';
-import Highlight from './Highlight';
+import New from './New';
+import History from './History';
 import Data from '../mock'; // DEV
 import '../css/App.css';
+import Main from './Main';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
-      today: false,
+      page: 'main',
     };
+
+    this.drillPageType = this.drillPageType.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setState({ data: Data });
+  }
 
-    // Check if there's one today.
-    for (let i = 0; i < Data.length; ++i) {
-      if (isToday(Data[i].date)) {
-        this.setState({ today: Data[i] });
-        break;
-      }
-    }
+  drillPageType(page) {
+    this.setState({ page });
   }
 
   render() {
-    const { data, today } = this.state;
+    const { data, page } = this.state;
+
     return (
       <div className="App">
-        <Navbar />
-        {today ? <Highlight item={today} /> : ''}
-        <List data={data} />
+        <Navbar drillPageType={this.drillPageType} />
+        {(() => {
+          switch (page) {
+            case 'main': return <Main data={data} />;
+            case 'history': return <History data={data} />;
+            case 'new': return <New />;
+            default: return null; // TODO: This
+          }
+        })()}
         <p className="footer">
           made by egrodo
         </p>
