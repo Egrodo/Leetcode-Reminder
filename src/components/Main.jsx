@@ -16,7 +16,8 @@ class Main extends Component {
       infoItem: false,
     };
 
-    this.drillOpenInfoItem = this.drillOpenInfoItem.bind(this);
+    this.drillOpenInfo = this.drillOpenInfo.bind(this);
+    this.saveItemEdit = this.saveItemEdit.bind(this);
   }
 
   componentDidMount() {
@@ -32,8 +33,14 @@ class Main extends Component {
     }
   }
 
-  drillOpenInfoItem(infoItem) {
+  drillOpenInfo(infoItem) {
     this.setState({ infoItem });
+  }
+
+  saveItemEdit(item) {
+    // TODO: But which item?
+    console.log('Saving Edit:');
+    console.log(item);
   }
 
   render() {
@@ -43,7 +50,7 @@ class Main extends Component {
     if (infoItem) {
       return (
         <section className="Main page">
-          <Info item={infoItem} drillOpenInfoItem={this.drillOpenInfoItem} />
+          <Info item={infoItem} drillOpenInfo={this.drillOpenInfo} saveItem={this.saveItemEdit} existing />
         </section>
       );
     }
@@ -57,7 +64,7 @@ class Main extends Component {
             <Fragment>
               <header className="primary">Current Challenge:</header>
               <div className="highlightBox">
-                <Item item={today} drillOpenInfoItem={this.drillOpenInfoItem} />
+                <Item item={today} drillOpenInfo={this.drillOpenInfo} />
               </div>
             </Fragment>
           )
@@ -74,7 +81,7 @@ class Main extends Component {
           ? (
             <section className="currentReminders">
               <header className="secondary">Future Challenges:</header>
-              <List data={data} drillOpenInfoItem={this.drillOpenInfoItem} />
+              <List data={data} drillOpenInfo={this.drillOpenInfo} />
             </section>
           )
           : (

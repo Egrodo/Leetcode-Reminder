@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import getName from '../modules/getName';
 import DatePicker from './DatePicker';
@@ -21,6 +21,7 @@ class Info extends Component {
 
     this.onLinkClick = this.onLinkClick.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
     this.onLinkChange = this.onLinkChange.bind(this);
     this.onNotesChange = this.onNotesChange.bind(this);
   }
@@ -44,13 +45,17 @@ class Info extends Component {
 
   onSaveClick() {
     // TODO: Save stuff and go back to main.
-    console.log(this.state);
-    this.props.drillOpenInfoItem(false);
+    this.props.saveItem(this.state);
+    if (this.props.existing) this.props.drillOpenInfo(false);
+  }
+
+  onCancelClick() {
+    this.props.drillOpenInfo(false);
   }
 
   render() {
     const { name, link, date, notes } = this.state;
-
+    const { existing } = this.props;
     return (
       <section className="Info">
         <header className="primary">{name}</header>
@@ -85,16 +90,29 @@ class Info extends Component {
             autoCapitalize="off"
             spellCheck="false"
             type="text"
+            value={notes}
             onChange={this.onNotesChange}
             placeholder="Any notes about the problem can go here!"
-          >
-            {notes}
-          </textarea>
+          />
         </div>
+        {existing
+          ? (
+            <Fragment>
+              <button className="infoBtn cancel" onClick={this.onCancelClick} type="submit">
+                Cancel
+              </button>
+              <button className="infoBtn" onClick={this.onSaveClick} type="submit">
+                Save
+              </button>
+            </Fragment>
+          )
+          : (
+            <button className="infoBtn" onClick={this.onSaveClick} type="submit">
+              Save
+            </button>
+          )
+        }
 
-        <button className="saveInfo" onClick={this.onSaveClick} type="submit">
-          Save
-        </button>
       </section>
     );
   }
@@ -102,12 +120,16 @@ class Info extends Component {
 
 Info.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
-  drillOpenInfoItem: PropTypes.func,
+  existing: PropTypes.bool,
+  drillOpenInfo: PropTypes.func,
+  saveItem: PropTypes.func,
 };
 
 Info.defaultProps = {
   item: {},
-  drillOpenInfoItem: (() => { throw new ReferenceError('drillOpenInfoItem not passed to List'); }),
+  existing: false,
+  drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Info'); }),
+  saveItem: (() => { throw new ReferenceError('saveItem not passed to Info'); }),
 };
 
 export default Info;

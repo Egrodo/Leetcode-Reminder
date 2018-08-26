@@ -29,7 +29,12 @@ class History extends Component {
 }
 
 History.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    link: PropTypes.string,
+    date: PropTypes.string,
+    notes: PropTypes.string,
+    done: PropTypes.bool,
+  })),
 };
 
 History.defaultProps = {

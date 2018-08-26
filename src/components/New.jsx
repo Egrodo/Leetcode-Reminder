@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Info from './Info';
 
-const New = () => {
-  const newItem = {
-    link: '',
-    date: '',
-    notes: '',
-    done: false,
-  };
+class New extends Component {
+  constructor() {
+    super();
+    this.state = {
+      newItem: {
+        link: '',
+        date: '',
+        notes: '',
+        done: false,
+      },
+    };
+  }
 
-  return (
-    <section className="New page">
-      <Info item={newItem} />
-    </section>
-  );
-};
+  saveNewItem(newItem) {
+    console.log('Saving:');
+    console.log(newItem);
+  }
+
+  render() {
+    return (
+      <section className="New page">
+        <Info item={this.state.newItem} existing={false} saveItem={this.saveNewItem} />
+      </section>
+    );
+  }
+}
 
 export default New;

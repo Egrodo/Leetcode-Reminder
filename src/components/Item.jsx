@@ -33,7 +33,7 @@ class Item extends Component {
   }
 
   onInfoClick() {
-    this.props.drillOpenInfoItem(this.props.item);
+    this.props.drillOpenInfo(this.props.item);
   }
 
   render() {
@@ -99,12 +99,12 @@ class Item extends Component {
 
 Item.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
-  drillOpenInfoItem: PropTypes.func,
+  drillOpenInfo: PropTypes.func,
 };
 
 Item.defaultProps = {
   item: {},
-  drillOpenInfoItem: (() => { throw new ReferenceError('drillOpenInfoItem not passed to List'); }),
+  drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Item'); }),
 };
 
 export default Item;

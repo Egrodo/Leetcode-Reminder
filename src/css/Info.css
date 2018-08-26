@@ -53,7 +53,7 @@
 }
 
 
-.saveInfo {
+.infoBtn {
   display: inline-block;
   padding: .7em 1.4em;
   border-radius: .15em;
@@ -72,15 +72,18 @@
   border: none;
 }
 
-.saveInfo:hover {
+.infoBtn.cancel {
+  margin-right: 1em;
+}
+.infoBtn:hover {
   cursor: pointer;
 }
 
-.saveInfo:focus {
+.infoBtn:focus {
   outline: none;
 }
 
-.saveInfo:active {
+.infoBtn:active {
   top: .1em;
   box-shadow: none;
 }
