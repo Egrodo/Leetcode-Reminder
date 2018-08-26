@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import NumPicker from './NumPicker';
 import '../css/DatePicker.css';
 
 class DatePicker extends Component {
@@ -8,48 +7,70 @@ class DatePicker extends Component {
     super(props);
 
     this.state = {
-      days: 2,
-      dayPicker: true,
-      weeks: 0,
-      weekPicker: false,
+      days: '2',
+      weeks: '0',
     };
 
+    this.dayInp = React.createRef();
+    this.weekInp = React.createRef();
+
     this.onDayClick = this.onDayClick.bind(this);
+    this.onDayChange = this.onDayChange.bind(this);
     this.onWeekClick = this.onWeekClick.bind(this);
+    this.onWeekChange = this.onWeekChange.bind(this);
   }
 
   onDayClick() {
-    // Open the selector.
-    this.setState(((prev) => {
-      return { dayPicker: !prev.dayPicker };
-    }));
+    this.dayInp.current.select();
   }
 
   onWeekClick() {
-    this.setState(((prev) => {
-      return { weekPicker: !prev.weekPicker };
-    }));
+    this.weekInp.current.select();
   }
 
-  drillNumChange(e) {
-    console.log(e.target.innerText);
+  onDayChange(e) {
+    // If the value entered is a number in the valid range, change it.
+    if (e.target.value === '') this.setState({ days: '' });
+    const val = e.target.value;
+    if (Number.isInteger(+val) && val >= 0 && val <= 9) {
+      this.setState({ days: val });
+    }
+  }
+
+  onWeekChange(e) {
+    if (e.target.value === '') this.setState({ weeks: '' });
+    const val = e.target.value;
+    if (Number.isInteger(+val) && val >= 0 && val <= 7) {
+      this.setState({ weeks: val });
+    }
+  }
+
+  submit() {
+    // TODO: On submit validate that there is at least one day, then do whatever.
   }
 
   render() {
     const { days, weeks } = this.state;
     return (
       <section className="DatePicker">
-        <button className="dateBtn" onClick={this.onDayClick} type="button">
-          {days}
-        </button>
-        <NumPicker type="day" drillNumChange={this.drillNumChange} />
+        <input
+          className="dateInp"
+          onClick={this.onDayClick}
+          onChange={this.onDayChange}
+          ref={this.dayInp}
+          value={days}
+        />
         <span>
-          {`Day${days > 1 ? 's' : ''}`}
+          Day(s)
         </span>
-        <button className="dateBtn" onClick={this.onWeekClick} type="button">
-          {weeks}
-        </button>
-        {`Week${days > 1 ? 's' : ''}`}
+        <input
+          className="dateInp"
+          onClick={this.onWeekClick}
+          onChange={this.onWeekChange}
+          ref={this.weekInp}
+          value={weeks}
+        />
+        Week(s)
       </section>
     );
   }

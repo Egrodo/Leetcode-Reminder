@@ -16,7 +16,7 @@ class History extends Component {
     this.setState({ data: this.props.data });
   }
 
-  // TODO: Only display past / done.
+  // TODO: Implement InfoBox here.
   render() {
     const { data } = this.state;
     return (
