@@ -26,7 +26,7 @@ class Main extends Component {
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
         // DEV:
-        this.setState({ today: data[i], infoItem: data[i] });
+        this.setState({ today: data[i] });
         break;
       }
     }
@@ -43,7 +43,7 @@ class Main extends Component {
     if (infoItem) {
       return (
         <section className="Main page">
-          <Info item={infoItem} />
+          <Info item={infoItem} drillOpenInfoItem={this.drillOpenInfoItem} />
         </section>
       );
     }

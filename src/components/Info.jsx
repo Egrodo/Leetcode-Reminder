@@ -20,6 +20,9 @@ class Info extends Component {
 
 
     this.onLinkClick = this.onLinkClick.bind(this);
+    this.onSaveClick = this.onSaveClick.bind(this);
+    this.onLinkChange = this.onLinkChange.bind(this);
+    this.onNotesChange = this.onNotesChange.bind(this);
   }
 
   componentWillMount() {
@@ -31,8 +34,22 @@ class Info extends Component {
     this.linkInput.current.select();
   }
 
+  onLinkChange(e) {
+    this.setState({ link: e.target.value });
+  }
+
+  onNotesChange(e) {
+    this.setState({ notes: e.target.value });
+  }
+
+  onSaveClick() {
+    // TODO: Save stuff and go back to main.
+    console.log(this.state);
+    this.props.drillOpenInfoItem(false);
+  }
+
   render() {
-    const { name, link, date, notes, done } = this.state;
+    const { name, link, date, notes } = this.state;
 
     return (
       <section className="Info">
@@ -53,19 +70,29 @@ class Info extends Component {
           />
         </div>
 
-        <header className="secondary">When?</header>
-        <DatePicker date={date} />
+        <div className="dateSelect">
+          <header className="secondary">When?</header>
+          <DatePicker date={date} />
+        </div>
 
-        <header className="secondary">Notes:</header>
-        <textarea
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          type="text"
-        >
-          {notes}
-        </textarea>
+        <div className="notes">
+          <header className="secondary">Notes:</header>
+          <textarea
+            className="notesText"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            type="text"
+            onChange={this.onNotesChange}
+          >
+            {notes}
+          </textarea>
+        </div>
+
+        <button className="saveInfo" onClick={this.onSaveClick} type="submit">
+          Save
+        </button>
       </section>
     );
   }
@@ -73,10 +100,12 @@ class Info extends Component {
 
 Info.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
+  drillOpenInfoItem: PropTypes.func,
 };
 
 Info.defaultProps = {
   item: {},
+  drillOpenInfoItem: (() => { throw new ReferenceError('drillOpenInfoItem not passed to List'); }),
 };
 
 export default Info;
