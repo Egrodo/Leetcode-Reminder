@@ -67,6 +67,7 @@ class Info extends Component {
             onClick={this.onLinkClick}
             onChange={this.onLinkChange}
             ref={this.linkInput}
+            placeholder="Paste link here..."
           />
         </div>
 
@@ -85,6 +86,7 @@ class Info extends Component {
             spellCheck="false"
             type="text"
             onChange={this.onNotesChange}
+            placeholder="Any notes about the problem can go here!"
           >
             {notes}
           </textarea>

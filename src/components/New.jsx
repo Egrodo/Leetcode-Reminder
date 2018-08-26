@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import Info from './Info';
 
-class New extends Component {
-  render() {
-    return (
-      <div>
+const New = () => {
+  const newItem = {
+    link: '',
+    date: '',
+    notes: '',
+    done: false,
+  };
 
-      </div>
-    );
-  }
-}
-
-New.propTypes = {
-
+  return (
+    <section className="New page">
+      <Info item={newItem} />
+    </section>
+  );
 };
 
 export default New;
