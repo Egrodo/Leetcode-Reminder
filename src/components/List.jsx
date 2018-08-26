@@ -4,7 +4,7 @@ import Item from './Item';
 import '../css/List.css';
 
 const List = (props) => {
-  const { data } = props;
+  const { data, drillOpenInfoItem } = props;
 
 
   // TODO: Optimize this.
@@ -23,7 +23,7 @@ const List = (props) => {
   return (
     <section className="List">
       <div className="itemContainer">
-        {data.map(item => <Item item={item} key={item.link} />)}
+        {data.map(item => <Item item={item} key={item.link} drillOpenInfoItem={drillOpenInfoItem} />)}
       </div>
     </section>
   );
@@ -31,10 +31,12 @@ const List = (props) => {
 
 List.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
+  drillOpenInfoItem: PropTypes.func,
 };
 
 List.defaultProps = {
   data: [],
+  drillOpenInfoItem: (() => { throw new ReferenceError('drillOpenInfoItem not passed to List'); }),
 };
 
 export default List;

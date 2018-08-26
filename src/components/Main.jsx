@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isToday } from 'date-fns';
 import List from './List';
 import Item from './Item';
+import Info from './Info';
 import '../css/Main.css';
 
 class Main extends Component {
@@ -12,7 +13,10 @@ class Main extends Component {
     this.state = {
       data: [],
       today: false,
+      infoItem: false,
     };
+
+    this.drillOpenInfoItem = this.drillOpenInfoItem.bind(this);
   }
 
   componentDidMount() {
@@ -21,22 +25,39 @@ class Main extends Component {
     // Check if there's one today.
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
-        this.setState({ today: data[i] });
+        // DEV:
+        this.setState({ today: data[i], infoItem: data[i] });
         break;
       }
     }
   }
 
+  drillOpenInfoItem(infoItem) {
+    this.setState({ infoItem });
+  }
+
   render() {
-    const { data, today } = this.state;
+    const { data, today, infoItem } = this.state;
+
+    // If we're in an infoView, render Info.
+    if (infoItem) {
+      return (
+        <section className="Main page">
+          <Info item={infoItem} />
+        </section>
+      );
+    }
+
+    // If there's a challenge to do today, show it in a Highlight.
+    // If there are future challenges, display them.
     return (
       <section className="Main page">
         {today
           ? (
             <Fragment>
-              <header className="secondary">Current Task:</header>
+              <header className="primary">Current Challenge:</header>
               <div className="highlightBox">
-                <Item item={today} />
+                <Item item={today} drillOpenInfoItem={this.drillOpenInfoItem} />
               </div>
             </Fragment>
           )
@@ -52,12 +73,12 @@ class Main extends Component {
         {data.length
           ? (
             <section className="currentReminders">
-              <header className="secondary">Current Reminders:</header>
-              <List data={data} />
+              <header className="secondary">Future Challenges:</header>
+              <List data={data} drillOpenInfoItem={this.drillOpenInfoItem} />
             </section>
           )
           : (
-            <header className="secondary">No Future Reminders</header>
+            <header className="secondary">No Future Challenges</header>
           )
         }
       </section>
@@ -66,7 +87,12 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    link: PropTypes.string,
+    date: PropTypes.string,
+    notes: PropTypes.string,
+    done: PropTypes.bool,
+  })),
   newBtn: PropTypes.func,
 };
 

@@ -10,7 +10,10 @@ class Item extends Component {
       name: '',
       link: '',
       date: '',
+      done: false,
     };
+
+    this.onInfoClick = this.onInfoClick.bind(this);
   }
 
   componentWillMount() {
@@ -29,6 +32,10 @@ class Item extends Component {
     });
   }
 
+  onInfoClick() {
+    this.props.drillOpenInfoItem(this.props.item);
+  }
+
   render() {
     const {
       name,
@@ -45,7 +52,7 @@ class Item extends Component {
       subText = 'Today';
     } else if (isPast(date)) {
       const days = differenceInCalendarDays(date, Date.now());
-      subText = `${days} days ago`;
+      subText = `${Math.abs(days)} days ago`;
     } else {
       const days = differenceInCalendarDays(date, Date.now());
       subText = `in ${days} day${days > 1 ? 's' : ''}`;
@@ -53,7 +60,7 @@ class Item extends Component {
 
     return (
       <section className={`Item${done ? ' done' : ''}`}>
-        <span className="infoContainer" alt="info" title="More Info">
+        <span onClick={this.onInfoClick} className="infoContainer" alt="info" title="More Info" role="button" tabIndex={0}>
           <svg xmlns="http://www.w3.org/2000/svg" className="info" viewBox="0 0 100 100">
             <path d="M50.433,0.892c-27.119,0-49.102,21.983-49.102,49.102s21.983,49.103,49.102,49.103s49.101-21.984,49.101-49.103S77.552,0.892,50.433,0.892z M59,79.031C59,83.433,55.194,87,50.5,87S42,83.433,42,79.031V42.469c0-4.401,3.806-7.969,8.5-7.969s8.5,3.568,8.5,7.969V79.031z M50.433,31.214c-5.048,0-9.141-4.092-9.141-9.142c0-5.049,4.092-9.141,9.141-9.141c5.05,0,9.142,4.092,9.142,9.141C59.574,27.122,55.482,31.214,50.433,31.214z" />
           </svg>
@@ -92,10 +99,12 @@ class Item extends Component {
 
 Item.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
+  drillOpenInfoItem: PropTypes.func,
 };
 
 Item.defaultProps = {
   item: {},
+  drillOpenInfoItem: (() => { throw new ReferenceError('drillOpenInfoItem not passed to List'); }),
 };
 
 export default Item;

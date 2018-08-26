@@ -21,7 +21,7 @@ class History extends Component {
     const { data } = this.state;
     return (
       <section className="History page">
-        <header className="primary">Previous Reminders</header>
+        <header className="primary">Past Challenges:</header>
         <List data={data} />
       </section>
     );

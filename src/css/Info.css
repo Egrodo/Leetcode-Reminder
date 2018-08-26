@@ -1,0 +1,21 @@
+.Info .link {
+  margin: 1em 0 1em 0;
+}
+
+.Info .secondary {
+  font-size: 1.2em;
+}
+
+.link input {
+  width: 85%;
+  padding: .5em;
+  border: 1px solid transparent;
+  border-bottom: 1px solid var(--highlight-color);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.link input:focus {
+  outline: none;
+  border: 1px solid var(--highlight-color);
+}

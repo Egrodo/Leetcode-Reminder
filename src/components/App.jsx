@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import { isPast, isToday } from 'date-fns';
 import Navbar from './Navbar';
 import New from './New';
 import History from './History';
-import Data from '../mock'; // DEV
+import Data from '../mock'; // NOTE: Dev
 import '../css/App.css';
 import Main from './Main';
-import { isPast } from 'date-fns';
 
 class App extends Component {
   constructor() {
@@ -25,7 +25,9 @@ class App extends Component {
     const current = [];
     const history = [];
     Data.forEach((item) => {
-      if (isPast(item.date) || item.done) {
+      if (isToday(item.date) && !item.done) {
+        current.push(item);
+      } else if (isPast(item.date) || item.done) {
         history.push(item);
       } else current.push(item);
     });
