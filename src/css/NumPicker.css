@@ -1,0 +1,27 @@
+.NumPicker {
+  position: relative;
+}
+
+.floater {
+  background-color: white;
+  position: absolute;
+}
+
+.numBtn {
+  display: block;
+  border: none;
+  border: 1px solid var(--highlight-color);
+  border-top: none;
+  background: inherit;
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.numBtn:focus {
+  outline: none;
+}
+
+.numBtn:hover {
+  cursor: pointer;
+  background-color: white;
+}

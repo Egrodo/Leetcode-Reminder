@@ -1,0 +1,19 @@
+.DatePicker {
+  display: inline-block;
+}
+
+.dateBtn {
+  border: none;
+  border-bottom: 1px solid var(--highlight-color);
+  background: inherit;
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.dateBtn:hover {
+  cursor: pointer;
+}
+
+.dateBtn:focus {
+  outline: none;
+}
