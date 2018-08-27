@@ -11,5 +11,6 @@ module.exports = {
         "prefer-destructuring": "off",
         "no-return-assign": "off",
         "object-curly-newline": "off",
+        "react/no-did-update-set-state": "off",
     }
 };

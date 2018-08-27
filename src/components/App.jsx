@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isPast, isToday } from 'date-fns';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import New from './New';
 import History from './History';
@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       current: [],
       history: [],
-      page: 'new',
+      page: 'main',
     };
 
     this.drillPageType = this.drillPageType.bind(this);

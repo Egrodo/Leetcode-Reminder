@@ -25,3 +25,8 @@
 .dateInp:last-of-type {
   margin-left: .2em;
 }
+
+.DatePicker header.secondary {
+  margin-top: .3em;
+  font-size: 1em;
+}

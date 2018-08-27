@@ -57,7 +57,7 @@ class Info extends Component {
 
   drillDateChange(days, weeks) {
     // Take week and days and turn them into a date string from now.
-    const date = format(addDays(new Date(), (7 * weeks) + days), 'MM-DD-YYYY');
+    const date = format(addDays(Date.now(), (7 * weeks) + days), 'M/DD/YYYY');
     console.log(date);
   }
 
