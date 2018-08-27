@@ -22,6 +22,15 @@ class DatePicker extends Component {
     this.onWeekChange = this.onWeekChange.bind(this);
   }
 
+  componentDidUpdate() {
+    const { days, weeks } = this.state;
+    this.props.drillDateChange(days, weeks);
+  }
+
+  componentWillMount() {
+    // Take the initialDate and calc future date etc.
+  }
+
   onDayClick() {
     this.dayInp.current.select();
   }
@@ -34,17 +43,13 @@ class DatePicker extends Component {
     // If the value entered is a number in the valid range, change it.
     if (e.target.value === '') this.setState({ days: '' });
     const val = e.target.value;
-    if (Number.isInteger(+val) && val >= 0 && val <= 9) {
-      this.setState({ days: val });
-    }
+    if (Number.isInteger(+val) && val >= 0 && val < 100) this.setState({ days: val });
   }
 
   onWeekChange(e) {
     if (e.target.value === '') this.setState({ weeks: '' });
     const val = e.target.value;
-    if (Number.isInteger(+val) && val >= 0 && val <= 7) {
-      this.setState({ weeks: val });
-    }
+    if (Number.isInteger(+val) && val >= 0 && val <= 9) this.setState({ weeks: val });
   }
 
   onDayKeyDown(e) {
@@ -55,7 +60,7 @@ class DatePicker extends Component {
       }));
     } else if (e.key === 'ArrowUp') {
       this.setState((({ days }) => {
-        if (days < 7) return { days: (+days) + 1 };
+        if (days < 99) return { days: (+days) + 1 };
         return null;
       }));
     }
@@ -73,10 +78,6 @@ class DatePicker extends Component {
         return null;
       }));
     }
-  }
-
-  submit() {
-    // TODO: On submit validate that there is at least one day, then do whatever.
   }
 
   render() {
@@ -112,10 +113,12 @@ class DatePicker extends Component {
 
 DatePicker.propTypes = {
   initialDate: PropTypes.string,
+  drillDateChange: PropTypes.func,
 };
 
-DatePicker.propTypes = {
-  initialDate: "1/1/1970",
+DatePicker.defaultProps = {
+  initialDate: '1/1/1970',
+  drillDateChange: (() => { throw new ReferenceError('drillDateChange not passed to DatePicker'); }),
 };
 
 

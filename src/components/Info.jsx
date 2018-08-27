@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { addDays, format } from 'date-fns';
 import getName from '../modules/getName';
 import DatePicker from './DatePicker';
 import '../css/Info.css';
@@ -24,6 +25,7 @@ class Info extends Component {
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onLinkChange = this.onLinkChange.bind(this);
     this.onNotesChange = this.onNotesChange.bind(this);
+    this.drillDateChange = this.drillDateChange.bind(this);
   }
 
   componentWillMount() {
@@ -53,6 +55,12 @@ class Info extends Component {
     this.props.drillOpenInfo(false);
   }
 
+  drillDateChange(days, weeks) {
+    // Take week and days and turn them into a date string from now.
+    const date = format(addDays(new Date(), (7 * weeks) + days), 'MM-DD-YYYY');
+    console.log(date);
+  }
+
   render() {
     const { name, link, date, notes } = this.state;
     const { existing } = this.props;
@@ -78,7 +86,7 @@ class Info extends Component {
 
         <div className="dateSelect">
           <header className="secondary">When?</header>
-          <DatePicker date={date} />
+          <DatePicker initialDate={date} drillDateChange={this.drillDateChange} />
         </div>
 
         <div className="notes">
