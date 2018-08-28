@@ -36,6 +36,7 @@ class App extends Component {
   }
 
   drillPageType(page) {
+    // This is not properly changing navbar display.
     this.setState({ page });
   }
 
@@ -43,10 +44,9 @@ class App extends Component {
     const { current, history, page } = this.state;
 
     // TODO: Replace switch with React Router implementation.
-    // There's also a problem currently with the navBar not keeping track of which page we're on if not used to switch.
     return (
       <div className="App">
-        <Navbar drillPageType={this.drillPageType} />
+        <Navbar drillPageType={this.drillPageType} active={page} />
         {(() => {
           switch (page) {
             case 'main': return <Main data={current} newBtn={(() => this.drillPageType('new'))} />;

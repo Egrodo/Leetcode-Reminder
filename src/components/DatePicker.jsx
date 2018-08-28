@@ -30,13 +30,14 @@ class DatePicker extends Component {
       // If it's in the future, calculate the days/weeks.
       const diffInDays = differenceInDays(initialDate, Date.now());
       const weeks = Math.floor(diffInDays / 7);
-      const days = (diffInDays % 7) + 1; // HACK: When you have more brain power figure out why this is needed.
+      // HACK: When you have more brain power figure out why this is needed.
+      const days = (diffInDays % 7) + 1;
       this.setState({ days, weeks, date: initialDate });
     }
   }
 
   componentDidUpdate() {
-    // When the component updates (ie: day/week count changes), ensure it was changed then recalc things.
+    // When the component updates (ie: day/week count changes), ensure it was changed then recalc.
     const { days, weeks, date } = this.state;
     const newDate = format(addDays(Date.now(), (+days + (+weeks * 7))), 'M/DD/YYYY');
     if (newDate !== date) {
@@ -137,6 +138,5 @@ DatePicker.defaultProps = {
   initialDate: '1/1/1970',
   drillDateChange: (() => { throw new ReferenceError('drillDateChange not passed to DatePicker'); }),
 };
-
 
 export default DatePicker;

@@ -12,6 +12,10 @@ class Navbar extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.active !== this.state.active) this.setState({ active: nextProps.active });
+  }
+
   onClick(e) {
     // Change tabs with prop func.
     if (this.state.active !== e.target.id) {
@@ -43,10 +47,12 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
+  active: PropTypes.string,
   drillPageType: PropTypes.func,
 };
 
 Navbar.defaultProps = {
+  active: 'main',
   drillPageType: (() => { throw new ReferenceError('drillPageType not passed into Navbar'); }),
 };
 

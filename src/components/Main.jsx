@@ -26,7 +26,6 @@ class Main extends Component {
     // Check if there's one today.
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
-        // DEV:
         this.setState({ today: data[i] });
         break;
       }
