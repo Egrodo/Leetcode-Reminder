@@ -1,4 +1,4 @@
-// NOTE: There must not be a preceeding slash.
+// NOTE: There must not be a preceeding slash on the link.
 export default [
   {
     link: 'https://leetcode.com/problems/jewels-and-stones',

@@ -22,6 +22,7 @@ class DatePicker extends Component {
     this.onWeekClick = this.onWeekClick.bind(this);
   }
 
+  // TODO: If input box active/focused, on scroll.
   componentDidMount() {
     // Take the initialDate and calc the days/weeks.
     const { initialDate } = this.props;
@@ -30,7 +31,6 @@ class DatePicker extends Component {
       // If it's in the future, calculate the days/weeks.
       const diffInDays = differenceInDays(initialDate, Date.now());
       const weeks = Math.floor(diffInDays / 7);
-      // HACK: When you have more brain power figure out why this is needed.
       const days = (diffInDays % 7) + 1;
       this.setState({ days, weeks, date: initialDate });
     }

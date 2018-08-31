@@ -16,31 +16,37 @@ class Main extends Component {
       infoItem: false,
     };
 
-    this.drillOpenInfo = this.drillOpenInfo.bind(this);
     this.saveItemEdit = this.saveItemEdit.bind(this);
+    this.drillOpenInfo = this.drillOpenInfo.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ data: this.props.data });
-    const { data } = this.props;
-    // Check if there's one today.
+    // On mount or update set data to state and check if there's one for today.
+    const data = this.props.data.map(o => ({ ...o }));
+    // Am modifying it by ref, don't.
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
-        this.setState({ today: data[i] });
-        break;
+        const today = data[i];
+        data.splice(i, 1);
+        this.setState({ today, data });
+        return;
       }
     }
+    this.setState({ data });
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ data: newProps.data });
-    const { data } = newProps;
+    console.log('recieving new props');
+    const data = newProps.data.map(o => ({ ...o }));
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
-        this.setState({ today: data[i] });
-        break;
+        const today = data[i];
+        data.splice(i, 1);
+        this.setState({ today, data });
+        return;
       }
     }
+    this.setState({ data, today: false });
   }
 
   drillOpenInfo(infoItem) {
@@ -52,6 +58,7 @@ class Main extends Component {
   }
 
   render() {
+    // TODO: Are today's being duplicated?
     const { data, today, infoItem } = this.state;
 
     // If we're in an infoView, render Info.
