@@ -12,17 +12,25 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      allData: [],
       current: [],
       history: [],
       page: 'main',
     };
 
     this.drillPageType = this.drillPageType.bind(this);
+    this.drillSaveItem = this.drillSaveItem.bind(this);
   }
 
   componentWillMount() {
-    // Calculate which items go where at toplevel to save on recalcs.
-    // History contains any items whose dates have past or have been marked 'done'.
+    // DEV: Data is organized into a current and a history array.
+    // If a user edits an item in history and makes it current, it needs to move.
+
+    // On first mount, get the data and organize it.
+    // On subsequent updates, re-organize it
+    // On subsequent saves, update allData and re-organize it.
+
+    // Organize data into history and current.
     const current = [];
     const history = [];
     Data.forEach((item) => {
@@ -32,7 +40,40 @@ class App extends Component {
         history.push(item);
       } else current.push(item);
     });
-    this.setState({ current, history });
+    this.setState({ allData: Data, current, history });
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  drillSaveItem(newItem, oldItem) {
+    // First ensure that there is actually a change.
+    if (newItem.link !== oldItem.link || newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
+      const allData = this.state.allData.map(o => ({ ...o }));
+      // Search for the oldItem, get the index.
+      for (let i = 0; i < allData.length; ++i) {
+        if (allData[i].link === oldItem.link) {
+          // If we found it, update allData and recalc current / history.
+          allData[i] = newItem;
+          this.setState((({ current, history }) => {
+            const newCurr = current.map(o => ({ ...o }));
+            const newHist = history.map(o => ({ ...o }));
+            allData.forEach((item) => {
+              if (isToday(item.date) && !item.done) {
+                newCurr.push(item);
+              } else if (isPast(item.date) || item.done) {
+                newHist.push(item);
+              } else newCurr.push(item);
+            });
+            console.log(newCurr);
+            return { current: newCurr, history: newHist };
+          }));
+          return;
+        }
+      }
+      // If we've finished the loop without finding it, error. TODO:
+    }
   }
 
   drillPageType(page) {
@@ -49,7 +90,9 @@ class App extends Component {
         <Navbar drillPageType={this.drillPageType} active={page} />
         {(() => {
           switch (page) {
-            case 'main': return <Main data={current} newBtn={(() => this.drillPageType('new'))} />;
+            case 'main': return (
+              <Main data={current} newBtn={(() => this.drillPageType('new'))} drillSaveItem={this.drillSaveItem} />
+            );
             case 'history': return <History data={history} />;
             case 'new': return <New />;
             default: return <Main data={current} />;

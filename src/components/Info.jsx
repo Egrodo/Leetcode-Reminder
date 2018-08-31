@@ -46,7 +46,7 @@ class Info extends Component {
   }
 
   onSaveClick() {
-    // TODO: Save stuff and go back to main.
+    // Save stuff the close the info screen.
     this.props.saveItem(this.state);
     if (this.props.existing) this.props.drillOpenInfo(false);
   }
@@ -58,7 +58,7 @@ class Info extends Component {
   drillDateChange(days, weeks) {
     // Take week and days and turn them into a date string from now.
     const date = format(addDays(Date.now(), (days + (7 * weeks))), 'M/DD/YYYY');
-    console.log(date);
+    this.setState({ date });
   }
 
   render() {

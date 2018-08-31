@@ -37,9 +37,7 @@ class Main extends Component {
   }
 
   saveItemEdit(item) {
-    // TODO: But which item?
-    console.log('Saving Edit:');
-    console.log(item);
+    this.props.drillSaveItem(item, this.state.infoItem);
   }
 
   render() {
@@ -49,7 +47,12 @@ class Main extends Component {
     if (infoItem) {
       return (
         <section className="Main page">
-          <Info item={infoItem} drillOpenInfo={this.drillOpenInfo} saveItem={this.saveItemEdit} existing />
+          <Info
+            item={infoItem}
+            drillOpenInfo={this.drillOpenInfo}
+            saveItem={this.saveItemEdit}
+            existing
+          />
         </section>
       );
     }
@@ -100,11 +103,13 @@ Main.propTypes = {
     done: PropTypes.bool,
   })),
   newBtn: PropTypes.func,
+  drillSaveItem: PropTypes.func,
 };
 
 Main.defaultProps = {
   data: null,
   newBtn: (() => { throw new ReferenceError('newBtn func not passed to Main.'); }),
+  drillSaveItem: (() => { throw new ReferenceError('drillSaveItem func not passed to Main.'); }),
 };
 
 export default Main;
