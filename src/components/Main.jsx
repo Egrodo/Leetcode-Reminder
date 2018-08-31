@@ -32,6 +32,17 @@ class Main extends Component {
     }
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ data: newProps.data });
+    const { data } = newProps;
+    for (let i = 0; i < data.length; ++i) {
+      if (isToday(data[i].date) && !data[i].done) {
+        this.setState({ today: data[i] });
+        break;
+      }
+    }
+  }
+
   drillOpenInfo(infoItem) {
     this.setState({ infoItem });
   }

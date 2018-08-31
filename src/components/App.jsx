@@ -56,18 +56,17 @@ class App extends Component {
         if (allData[i].link === oldItem.link) {
           // If we found it, update allData and recalc current / history.
           allData[i] = newItem;
-          this.setState((({ current, history }) => {
-            const newCurr = current.map(o => ({ ...o }));
-            const newHist = history.map(o => ({ ...o }));
+          this.setState((() => {
+            const current = [];
+            const history = [];
             allData.forEach((item) => {
               if (isToday(item.date) && !item.done) {
-                newCurr.push(item);
+                current.push(item);
               } else if (isPast(item.date) || item.done) {
-                newHist.push(item);
-              } else newCurr.push(item);
+                history.push(item);
+              } else current.push(item);
             });
-            console.log(newCurr);
-            return { current: newCurr, history: newHist };
+            return { allData, current, history };
           }));
           return;
         }
