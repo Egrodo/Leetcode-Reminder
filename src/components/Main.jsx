@@ -82,7 +82,11 @@ class Main extends Component {
             <Fragment>
               <header className="primary">Current Challenge:</header>
               <div className="highlightBox">
-                <Item item={today} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
+                <Item
+                  item={today}
+                  drillOpenInfo={this.drillOpenInfo}
+                  drillDoneItem={this.props.drillDoneItem}
+                />
               </div>
             </Fragment>
           )
@@ -99,7 +103,11 @@ class Main extends Component {
           ? (
             <section className="currentReminders">
               <header className="secondary">Future Challenges:</header>
-              <List data={data} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
+              <List
+                data={data}
+                drillOpenInfo={this.drillOpenInfo}
+                drillDoneItem={this.props.drillDoneItem}
+              />
             </section>
           )
           : (

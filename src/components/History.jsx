@@ -18,17 +18,27 @@ class History extends Component {
     this.setState({ data: this.props.data });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ data: newProps.data });
+  }
+
   drillOpenInfo() {
 
   }
 
   // TODO: Implement InfoBox here.
+  // TODO: Make 'done' and 'delete' work here.
   render() {
     const { data } = this.state;
     return (
       <section className="History page">
         <header className="primary">Past Challenges:</header>
-        <List data={data} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
+        <List
+          data={data}
+          drillOpenInfo={this.drillOpenInfo}
+          drillDoneItem={this.props.drillDoneItem}
+          drillDeleteItem={this.props.drillDeleteItem}
+        />
       </section>
     );
   }
@@ -42,11 +52,13 @@ History.propTypes = {
     done: PropTypes.bool,
   })),
   drillDoneItem: PropTypes.func,
+  drillDeleteItem: PropTypes.func,
 };
 
 History.defaultProps = {
   data: null,
   drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to Item'); }),
+  drillDeleteItem: (() => { throw new ReferenceError('drillDeleteItem not passed to Item'); }),
 };
 
 export default History;

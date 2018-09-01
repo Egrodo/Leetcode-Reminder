@@ -41,6 +41,7 @@ class Info extends Component {
   }
 
   onKeyDown(e) {
+    // Save item on ctrl enter.
     if (e.ctrlKey && e.key === 'Enter') {
       this.props.saveItem(this.state, this.props.item);
       if (this.props.existing) this.props.drillOpenInfo(false);
@@ -52,12 +53,10 @@ class Info extends Component {
   }
 
   onLinkChange(e) {
-    // TODO: enter saves
     this.setState({ link: e.target.value });
   }
 
   onNotesChange(e) {
-    // TODO: ctrl+enter saves
     this.setState({ notes: e.target.value });
   }
 
@@ -69,7 +68,6 @@ class Info extends Component {
   drillDateChange(days, weeks) {
     // Take week and days and turn them into a date string from now.
     const date = format(addDays(Date.now(), (+days + (+weeks * 7))), 'M/DD/YYYY');
-    console.log(date);
     this.setState({ date });
   }
 

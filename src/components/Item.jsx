@@ -15,6 +15,7 @@ class Item extends Component {
 
     this.onInfoClick = this.onInfoClick.bind(this);
     this.onCheckClick = this.onCheckClick.bind(this);
+    this.onCrossClick = this.onCrossClick.bind(this);
   }
 
   componentWillMount() {
@@ -33,12 +34,20 @@ class Item extends Component {
     });
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState(newProps.item);
+  }
+
   onInfoClick() {
     this.props.drillOpenInfo(this.props.item);
   }
 
   onCheckClick() {
     this.props.drillDoneItem(this.state);
+  }
+
+  onCrossClick() {
+    this.props.drillDeleteItem(this.state);
   }
 
   render() {
@@ -80,7 +89,7 @@ class Item extends Component {
         </span>
         {done
           ? (
-            <span className="svgContainer" title="Delete" alt="done checkmark">
+            <span onClick={this.onCrossClick} className="svgContainer" title="Delete" alt="done checkmark">
               <svg xmlns="http://www.w3.org/2000/svg" className="cross" viewBox="0 0 48 48">
                 <g>
                   <path d="M 36.019531 8.445313 L 39.558594 11.980469 L 11.980469 39.554688 L 8.445313 36.019531 Z " />
@@ -106,12 +115,14 @@ Item.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
   drillOpenInfo: PropTypes.func,
   drillDoneItem: PropTypes.func,
+  drillDeleteItem: PropTypes.func,
 };
 
 Item.defaultProps = {
   item: {},
   drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Item'); }),
   drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to Item'); }),
+  drillDeleteItem: (() => { throw new ReferenceError('drillDeleteItem not passed to Item'); }),
 };
 
 export default Item;

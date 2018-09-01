@@ -23,6 +23,7 @@ class App extends Component {
     this.drillPageType = this.drillPageType.bind(this);
     this.drillDoneItem = this.drillDoneItem.bind(this);
     this.drillSaveItem = this.drillSaveItem.bind(this);
+    this.drillDeleteItem = this.drillDeleteItem.bind(this);
   }
 
   componentWillMount() {
@@ -36,7 +37,6 @@ class App extends Component {
       allData.push(item);
       return allData;
     }), this.recalcData);
-    // BUG: Recalc dates isn't working?
   }
 
   drillSaveItem(newItem, oldItem = false) {
@@ -56,8 +56,21 @@ class App extends Component {
     }
   }
 
+  drillDeleteItem(item) {
+    this.setState((({ allData }) => {
+      // TODO: Optimize the data flow with objects instead.
+      for (let i = 0; i < allData.length; ++i) {
+        if (item.link === allData[i].link) {
+          allData.splice(i, 1);
+          return { allData };
+        }
+      }
+      console.error('drillDeleteItem failed to find item');
+      return null;
+    }), this.recalcData);
+  }
+
   drillDoneItem(item) {
-    // Search for item, mark it done (or not done).
     const allData = this.state.allData.map(o => ({ ...o }));
     for (let i = 0; i < allData.length; ++i) {
       if (allData[i].link === item.link) {
@@ -68,12 +81,12 @@ class App extends Component {
   }
 
   drillPageType(page) {
-    // This is not properly changing navbar display.
     this.setState({ page });
   }
 
   recalcData() {
     // Function to recalc current and history.
+    // If this func is being called on every data change I can make my Chrome API calls here.
     this.setState((({ allData }) => {
       const current = [];
       const history = [];
@@ -110,6 +123,7 @@ class App extends Component {
                 data={history}
                 drillDoneItem={this.drillDoneItem}
                 drillSaveItem={this.drillSaveItem}
+                drillDeleteItem={this.drillDeleteItem}
               />
             );
             case 'new': return (

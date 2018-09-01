@@ -4,7 +4,12 @@ import Item from './Item';
 import '../css/List.css';
 
 const List = (props) => {
-  const { data, drillOpenInfo, drillDoneItem } = props;
+  const {
+    data,
+    drillOpenInfo,
+    drillDoneItem,
+    drillDeleteItem,
+  } = props;
 
 
   // TODO: Optimize this.
@@ -29,6 +34,7 @@ const List = (props) => {
             key={item.link}
             drillOpenInfo={drillOpenInfo}
             drillDoneItem={drillDoneItem}
+            drillDeleteItem={drillDeleteItem}
           />
         ))}
       </div>
@@ -45,12 +51,14 @@ List.propTypes = {
   })),
   drillOpenInfo: PropTypes.func,
   drillDoneItem: PropTypes.func,
+  drillDeleteItem: PropTypes.func,
 };
 
 List.defaultProps = {
   data: [],
   drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to List'); }),
   drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to List'); }),
+  drillDeleteItem: (() => { throw new ReferenceError('drillDeleteItem not passed to Item'); }),
 };
 
 export default List;
