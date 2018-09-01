@@ -22,7 +22,6 @@ class DatePicker extends Component {
     this.onWeekClick = this.onWeekClick.bind(this);
   }
 
-  // TODO: If input box active/focused, on scroll.
   componentDidMount() {
     // Take the initialDate and calc the days/weeks.
     const { initialDate } = this.props;

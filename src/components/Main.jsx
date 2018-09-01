@@ -57,7 +57,6 @@ class Main extends Component {
   }
 
   render() {
-    // TODO: Are today's being duplicated?
     const { data, today, infoItem } = this.state;
 
     // If we're in an infoView, render Info.
@@ -104,7 +103,9 @@ class Main extends Component {
             </section>
           )
           : (
-            <header className="secondary">No Future Challenges</header>
+            <section className="currentReminders">
+              <header className="secondary">No Future Challenges</header>
+            </section>
           )
         }
       </section>

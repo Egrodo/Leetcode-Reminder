@@ -21,8 +21,9 @@ class Info extends Component {
 
 
     this.onLinkClick = this.onLinkClick.bind(this);
-    this.onSave = this.onSave.bind(this);
+    this.saveItem = this.saveItem.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onLinkChange = this.onLinkChange.bind(this);
     this.onNotesChange = this.onNotesChange.bind(this);
     this.drillDateChange = this.drillDateChange.bind(this);
@@ -31,6 +32,19 @@ class Info extends Component {
   componentWillMount() {
     const name = getName(this.props.item.link);
     this.setState({ name, ...this.props.item });
+
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  onKeyDown(e) {
+    if (e.ctrlKey && e.key === 'Enter') {
+      this.props.saveItem(this.state, this.props.item);
+      if (this.props.existing) this.props.drillOpenInfo(false);
+    }
   }
 
   onLinkClick() {
@@ -47,11 +61,6 @@ class Info extends Component {
     this.setState({ notes: e.target.value });
   }
 
-  onSave() {
-    // Save stuff the close the info screen.
-    this.props.saveItem(this.state);
-    if (this.props.existing) this.props.drillOpenInfo(false);
-  }
 
   onCancelClick() {
     this.props.drillOpenInfo(false);
@@ -61,6 +70,12 @@ class Info extends Component {
     // Take week and days and turn them into a date string from now.
     const date = format(addDays(Date.now(), (days + (7 * weeks))), 'M/DD/YYYY');
     this.setState({ date });
+  }
+
+  saveItem() {
+    // Save stuff the close the info screen.
+    this.props.saveItem(this.state, this.props.item);
+    if (this.props.existing) this.props.drillOpenInfo(false);
   }
 
   render() {
@@ -111,13 +126,13 @@ class Info extends Component {
               <button className="infoBtn cancel" onClick={this.onCancelClick} type="submit">
                 Cancel
               </button>
-              <button className="infoBtn" onClick={this.onSave} type="submit">
+              <button className="infoBtn" onClick={this.saveItem} type="submit">
                 Save
               </button>
             </Fragment>
           )
           : (
-            <button className="infoBtn" onClick={this.onSave} type="submit">
+            <button className="infoBtn" onClick={this.saveItem} type="submit">
               Save
             </button>
           )

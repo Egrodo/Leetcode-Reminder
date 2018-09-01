@@ -19,38 +19,43 @@ class App extends Component {
     };
 
     this.recalcData = this.recalcData.bind(this);
+    this.saveNewItem = this.saveNewItem.bind(this);
     this.drillPageType = this.drillPageType.bind(this);
     this.drillDoneItem = this.drillDoneItem.bind(this);
     this.drillSaveItem = this.drillSaveItem.bind(this);
   }
 
-  // TODO: Static method to update current and history.
   componentWillMount() {
-    // DEV: Data is organized into a current and a history array.
-    // If a user edits an item in history and makes it current, it needs to move.
-
-    // On first mount, get the data and organize it.
-    // On subsequent updates, re-organize it
-    // On subsequent saves, update allData and re-organize it.
-
     // Organize data into history and current.
-    this.recalcData(Data);
+    this.setState({ allData: Data }, this.recalcData);
   }
 
-  drillSaveItem(newItem, oldItem) {
+  saveNewItem(item) {
+    this.setState((({ allData }) => {
+      allData.push(item);
+      return allData;
+    }), this.recalcData());
+  }
+
+  drillSaveItem(newItem, oldItem = false) {
     // First ensure that there is actually a change.
-    if (newItem.link !== oldItem.link || newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
+    if (!oldItem || newItem.link !== oldItem.link) {
+      this.saveNewItem(newItem);
+      return;
+    }
+
+    if (newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
       const allData = this.state.allData.map(o => ({ ...o }));
       // Search for the oldItem, get the index.
       for (let i = 0; i < allData.length; ++i) {
         if (allData[i].link === oldItem.link) {
           // If we found it, update allData and recalc current / history.
           allData[i] = newItem;
-          this.recalcData(allData);
+          this.setState({ allData }, this.recalcData);
           return;
         }
       }
-      throw new ReferenceError("Couldn't find the item to save in drillSaveItem");
+      throw new Error('drillSaveItem: Couldnt find item to save.');
     }
   }
 
@@ -60,7 +65,7 @@ class App extends Component {
     for (let i = 0; i < allData.length; ++i) {
       if (allData[i].link === item.link) {
         allData[i].done = true;
-        this.recalcData(allData);
+        this.setState({ allData }, this.recalcData);
       }
     }
   }
@@ -70,8 +75,9 @@ class App extends Component {
     this.setState({ page });
   }
 
-  recalcData(allData) {
-    this.setState((() => {
+  recalcData() {
+    // Function to recalc current and history.
+    this.setState((({ allData }) => {
       const current = [];
       const history = [];
       allData.forEach((item) => {
@@ -81,7 +87,7 @@ class App extends Component {
           history.push(item);
         } else current.push(item);
       });
-      return { allData, current, history };
+      return { current, history };
     }));
   }
 
