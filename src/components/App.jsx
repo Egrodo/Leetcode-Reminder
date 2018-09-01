@@ -36,6 +36,7 @@ class App extends Component {
       allData.push(item);
       return allData;
     }), this.recalcData);
+    // BUG: Recalc dates isn't working?
   }
 
   drillSaveItem(newItem, oldItem = false) {
@@ -72,8 +73,6 @@ class App extends Component {
   }
 
   recalcData() {
-    console.log('recalculating');
-    // TODO: Bug that's setting the state all funky-like.
     // Function to recalc current and history.
     this.setState((({ allData }) => {
       const current = [];
@@ -113,8 +112,13 @@ class App extends Component {
                 drillSaveItem={this.drillSaveItem}
               />
             );
-            case 'new': return <New />;
-            default: return <Main data={current} />;
+            case 'new': return (
+              <New
+                saveNewItem={this.saveNewItem}
+                drillPageType={this.drillPageType}
+              />
+            );
+            default: throw new Error('invalid page type on nav switch');
           }
         })()}
         <p className="footer">

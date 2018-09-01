@@ -56,11 +56,11 @@ class DatePicker extends Component {
   onType(e) {
     // When a new day/week is manually typed.
     if (e.target.id === 'day') {
-      if (e.target.value === '') this.setState({ days: '' });
+      if (e.target.value === '') this.setState({ days: '0' });
       const val = e.target.value;
       if (Number.isInteger(+val) && val >= 0 && val < 100) this.setState({ days: val });
     } else if (e.target.id === 'week') {
-      if (e.target.value === '') this.setState({ weeks: '' });
+      if (e.target.value === '') this.setState({ weeks: '0' });
       const val = e.target.value;
       if (Number.isInteger(+val) && val >= 0 && val <= 9) this.setState({ weeks: val });
     }

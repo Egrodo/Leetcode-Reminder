@@ -20,11 +20,11 @@ class Info extends Component {
     this.linkInput = React.createRef();
 
 
-    this.onLinkClick = this.onLinkClick.bind(this);
     this.saveItem = this.saveItem.bind(this);
-    this.onCancelClick = this.onCancelClick.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.onLinkClick = this.onLinkClick.bind(this);
     this.onLinkChange = this.onLinkChange.bind(this);
+    this.onCancelClick = this.onCancelClick.bind(this);
     this.onNotesChange = this.onNotesChange.bind(this);
     this.drillDateChange = this.drillDateChange.bind(this);
   }
@@ -68,7 +68,8 @@ class Info extends Component {
 
   drillDateChange(days, weeks) {
     // Take week and days and turn them into a date string from now.
-    const date = format(addDays(Date.now(), (days + (7 * weeks))), 'M/DD/YYYY');
+    const date = format(addDays(Date.now(), (+days + (+weeks * 7))), 'M/DD/YYYY');
+    console.log(date);
     this.setState({ date });
   }
 
@@ -151,7 +152,7 @@ Info.propTypes = {
 };
 
 Info.defaultProps = {
-  item: {},
+  item: { link: '', date: '', notes: '', done: false },
   existing: false,
   drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Info'); }),
   saveItem: (() => { throw new ReferenceError('saveItem not passed to Info'); }),

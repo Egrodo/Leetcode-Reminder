@@ -1,31 +1,36 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Info from './Info';
 
 class New extends Component {
-  constructor() {
-    super();
-    this.state = {
-      newItem: {
-        link: '',
-        date: '',
-        notes: '',
-        done: false,
-      },
-    };
+  constructor(props) {
+    super(props);
+
+    this.saveItem = this.saveItem.bind(this);
   }
 
-  saveNewItem(newItem) {
-    console.log('Saving:');
-    console.log(newItem);
+  saveItem(newItem) {
+    this.props.saveNewItem(newItem);
+    this.props.drillPageType('main');
   }
 
   render() {
     return (
       <section className="New page">
-        <Info item={this.state.newItem} existing={false} saveItem={this.saveNewItem} />
+        <Info existing={false} saveItem={this.saveItem} />
       </section>
     );
   }
 }
+
+New.propTypes = {
+  saveNewItem: PropTypes.func,
+  drillPageType: PropTypes.func,
+};
+
+New.defaultProps = {
+  saveNewItem: (() => { throw new ReferenceError('saveNewItem func not passed to Main.'); }),
+  drillPageType: (() => { throw new ReferenceError('drillPageType func not passed to Main.'); }),
+};
 
 export default New;
