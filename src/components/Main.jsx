@@ -36,7 +36,6 @@ class Main extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('recieving new props');
     const data = newProps.data.map(o => ({ ...o }));
     for (let i = 0; i < data.length; ++i) {
       if (isToday(data[i].date) && !data[i].done) {
@@ -84,7 +83,7 @@ class Main extends Component {
             <Fragment>
               <header className="primary">Current Challenge:</header>
               <div className="highlightBox">
-                <Item item={today} drillOpenInfo={this.drillOpenInfo} />
+                <Item item={today} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
               </div>
             </Fragment>
           )
@@ -101,7 +100,7 @@ class Main extends Component {
           ? (
             <section className="currentReminders">
               <header className="secondary">Future Challenges:</header>
-              <List data={data} drillOpenInfo={this.drillOpenInfo} />
+              <List data={data} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
             </section>
           )
           : (
@@ -122,12 +121,14 @@ Main.propTypes = {
   })),
   newBtn: PropTypes.func,
   drillSaveItem: PropTypes.func,
+  drillDoneItem: PropTypes.func,
 };
 
 Main.defaultProps = {
   data: null,
   newBtn: (() => { throw new ReferenceError('newBtn func not passed to Main.'); }),
   drillSaveItem: (() => { throw new ReferenceError('drillSaveItem func not passed to Main.'); }),
+  drillDoneItem: (() => { throw new ReferenceError('drillDoneItem func not passed to Main.'); }),
 };
 
 export default Main;

@@ -14,6 +14,7 @@ class Item extends Component {
     };
 
     this.onInfoClick = this.onInfoClick.bind(this);
+    this.onCheckClick = this.onCheckClick.bind(this);
   }
 
   componentWillMount() {
@@ -34,6 +35,10 @@ class Item extends Component {
 
   onInfoClick() {
     this.props.drillOpenInfo(this.props.item);
+  }
+
+  onCheckClick() {
+    this.props.drillDoneItem(this.state);
   }
 
   render() {
@@ -85,7 +90,7 @@ class Item extends Component {
             </span>
           )
           : (
-            <span className="svgContainer" title="Mark as done" alt="done checkmark">
+            <span onClick={this.onCheckClick} role="button" tabIndex={0} className="svgContainer" title="Mark as done" alt="done checkmark">
               <svg xmlns="http://www.w3.org/2000/svg" className="check" viewBox="0 0 24 24">
                 <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
               </svg>
@@ -100,11 +105,13 @@ class Item extends Component {
 Item.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
   drillOpenInfo: PropTypes.func,
+  drillDoneItem: PropTypes.func,
 };
 
 Item.defaultProps = {
   item: {},
   drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Item'); }),
+  drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to Item'); }),
 };
 
 export default Item;

@@ -18,10 +18,13 @@ class App extends Component {
       page: 'main',
     };
 
+    this.recalcData = this.recalcData.bind(this);
     this.drillPageType = this.drillPageType.bind(this);
+    this.drillDoneItem = this.drillDoneItem.bind(this);
     this.drillSaveItem = this.drillSaveItem.bind(this);
   }
 
+  // TODO: Static method to update current and history.
   componentWillMount() {
     // DEV: Data is organized into a current and a history array.
     // If a user edits an item in history and makes it current, it needs to move.
@@ -31,20 +34,7 @@ class App extends Component {
     // On subsequent saves, update allData and re-organize it.
 
     // Organize data into history and current.
-    const current = [];
-    const history = [];
-    Data.forEach((item) => {
-      if (isToday(item.date) && !item.done) {
-        current.push(item);
-      } else if (isPast(item.date) || item.done) {
-        history.push(item);
-      } else current.push(item);
-    });
-    this.setState({ allData: Data, current, history });
-  }
-
-  componentDidUpdate() {
-
+    this.recalcData(Data);
   }
 
   drillSaveItem(newItem, oldItem) {
@@ -56,28 +46,43 @@ class App extends Component {
         if (allData[i].link === oldItem.link) {
           // If we found it, update allData and recalc current / history.
           allData[i] = newItem;
-          this.setState((() => {
-            const current = [];
-            const history = [];
-            allData.forEach((item) => {
-              if (isToday(item.date) && !item.done) {
-                current.push(item);
-              } else if (isPast(item.date) || item.done) {
-                history.push(item);
-              } else current.push(item);
-            });
-            return { allData, current, history };
-          }));
+          this.recalcData(allData);
           return;
         }
       }
-      // If we've finished the loop without finding it, error. TODO:
+      throw new ReferenceError("Couldn't find the item to save in drillSaveItem");
+    }
+  }
+
+  drillDoneItem(item) {
+    // Search for item, mark it done (or not done).
+    const allData = this.state.allData.map(o => ({ ...o }));
+    for (let i = 0; i < allData.length; ++i) {
+      if (allData[i].link === item.link) {
+        allData[i].done = true;
+        this.recalcData(allData);
+      }
     }
   }
 
   drillPageType(page) {
     // This is not properly changing navbar display.
     this.setState({ page });
+  }
+
+  recalcData(allData) {
+    this.setState((() => {
+      const current = [];
+      const history = [];
+      allData.forEach((item) => {
+        if (isToday(item.date) && !item.done) {
+          current.push(item);
+        } else if (isPast(item.date) || item.done) {
+          history.push(item);
+        } else current.push(item);
+      });
+      return { allData, current, history };
+    }));
   }
 
   render() {
@@ -90,9 +95,20 @@ class App extends Component {
         {(() => {
           switch (page) {
             case 'main': return (
-              <Main data={current} newBtn={(() => this.drillPageType('new'))} drillSaveItem={this.drillSaveItem} />
+              <Main
+                data={current}
+                newBtn={(() => this.drillPageType('new'))}
+                drillSaveItem={this.drillSaveItem}
+                drillDoneItem={this.drillDoneItem}
+              />
             );
-            case 'history': return <History data={history} />;
+            case 'history': return (
+              <History
+                data={history}
+                drillDoneItem={this.drillDoneItem}
+                drillSaveItem={this.drillSaveItem}
+              />
+            );
             case 'new': return <New />;
             default: return <Main data={current} />;
           }

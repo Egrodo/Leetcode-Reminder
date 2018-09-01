@@ -21,7 +21,7 @@ class Info extends Component {
 
 
     this.onLinkClick = this.onLinkClick.bind(this);
-    this.onSaveClick = this.onSaveClick.bind(this);
+    this.onSave = this.onSave.bind(this);
     this.onCancelClick = this.onCancelClick.bind(this);
     this.onLinkChange = this.onLinkChange.bind(this);
     this.onNotesChange = this.onNotesChange.bind(this);
@@ -38,14 +38,16 @@ class Info extends Component {
   }
 
   onLinkChange(e) {
+    // TODO: enter saves
     this.setState({ link: e.target.value });
   }
 
   onNotesChange(e) {
+    // TODO: ctrl+enter saves
     this.setState({ notes: e.target.value });
   }
 
-  onSaveClick() {
+  onSave() {
     // Save stuff the close the info screen.
     this.props.saveItem(this.state);
     if (this.props.existing) this.props.drillOpenInfo(false);
@@ -109,13 +111,13 @@ class Info extends Component {
               <button className="infoBtn cancel" onClick={this.onCancelClick} type="submit">
                 Cancel
               </button>
-              <button className="infoBtn" onClick={this.onSaveClick} type="submit">
+              <button className="infoBtn" onClick={this.onSave} type="submit">
                 Save
               </button>
             </Fragment>
           )
           : (
-            <button className="infoBtn" onClick={this.onSaveClick} type="submit">
+            <button className="infoBtn" onClick={this.onSave} type="submit">
               Save
             </button>
           )

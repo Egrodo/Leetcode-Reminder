@@ -10,10 +10,16 @@ class History extends Component {
     this.state = {
       data: [],
     };
+
+    this.drillOpenInfo = this.drillOpenInfo.bind(this);
   }
 
   componentWillMount() {
     this.setState({ data: this.props.data });
+  }
+
+  drillOpenInfo() {
+
   }
 
   // TODO: Implement InfoBox here.
@@ -22,7 +28,7 @@ class History extends Component {
     return (
       <section className="History page">
         <header className="primary">Past Challenges:</header>
-        <List data={data} />
+        <List data={data} drillOpenInfo={this.drillOpenInfo} drillDoneItem={this.props.drillDoneItem} />
       </section>
     );
   }
@@ -35,10 +41,12 @@ History.propTypes = {
     notes: PropTypes.string,
     done: PropTypes.bool,
   })),
+  drillDoneItem: PropTypes.func,
 };
 
 History.defaultProps = {
   data: null,
+  drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to Item'); }),
 };
 
 export default History;
