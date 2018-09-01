@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import List from './List';
+import Info from './Info';
 import '../css/History.css';
 
 class History extends Component {
@@ -9,6 +10,7 @@ class History extends Component {
     super(props);
     this.state = {
       data: [],
+      infoItem: false,
     };
 
     this.drillOpenInfo = this.drillOpenInfo.bind(this);
@@ -22,14 +24,29 @@ class History extends Component {
     this.setState({ data: newProps.data });
   }
 
-  drillOpenInfo() {
-
+  drillOpenInfo(infoItem) {
+    console.log(infoItem);
+    this.setState({ infoItem });
   }
 
   // TODO: Implement InfoBox here.
-  // TODO: Make 'done' and 'delete' work here.
   render() {
-    const { data } = this.state;
+    const { data, infoItem } = this.state;
+
+    // If we're in an infoView, render Info.
+    if (infoItem) {
+      return (
+        <section className="Main page">
+          <Info
+            item={infoItem}
+            drillOpenInfo={this.drillOpenInfo}
+            drillSaveItem={this.props.drillSaveItem}
+            existing
+          />
+        </section>
+      );
+    }
+
     return (
       <section className="History page">
         <header className="primary">Past Challenges:</header>
@@ -52,12 +69,14 @@ History.propTypes = {
     done: PropTypes.bool,
   })),
   drillDoneItem: PropTypes.func,
+  drillSaveItem: PropTypes.func,
   drillDeleteItem: PropTypes.func,
 };
 
 History.defaultProps = {
   data: null,
   drillDoneItem: (() => { throw new ReferenceError('drillDoneItem not passed to Item'); }),
+  drillSaveItem: (() => { throw new ReferenceError('drillSaveItem not passed to Item'); }),
   drillDeleteItem: (() => { throw new ReferenceError('drillDeleteItem not passed to Item'); }),
 };
 

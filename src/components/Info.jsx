@@ -29,6 +29,7 @@ class Info extends Component {
     this.drillDateChange = this.drillDateChange.bind(this);
   }
 
+  // TODO: The date display needs to be able to go into the negatives for past items.
   componentWillMount() {
     const name = getName(this.props.item.link);
     this.setState({ name, ...this.props.item });
@@ -43,7 +44,7 @@ class Info extends Component {
   onKeyDown(e) {
     // Save item on ctrl enter.
     if (e.ctrlKey && e.key === 'Enter') {
-      this.props.saveItem(this.state, this.props.item);
+      this.props.drillSaveItem(this.state, this.props.item);
       if (this.props.existing) this.props.drillOpenInfo(false);
     }
   }
@@ -60,7 +61,6 @@ class Info extends Component {
     this.setState({ notes: e.target.value });
   }
 
-
   onCancelClick() {
     this.props.drillOpenInfo(false);
   }
@@ -73,7 +73,7 @@ class Info extends Component {
 
   saveItem() {
     // Save stuff the close the info screen.
-    this.props.saveItem(this.state, this.props.item);
+    this.props.drillSaveItem(this.state, this.props.item);
     if (this.props.existing) this.props.drillOpenInfo(false);
   }
 
@@ -146,14 +146,14 @@ Info.propTypes = {
   item: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.bool])),
   existing: PropTypes.bool,
   drillOpenInfo: PropTypes.func,
-  saveItem: PropTypes.func,
+  drillSaveItem: PropTypes.func,
 };
 
 Info.defaultProps = {
   item: { link: '', date: '', notes: '', done: false },
   existing: false,
   drillOpenInfo: (() => { throw new ReferenceError('drillOpenInfo not passed to Info'); }),
-  saveItem: (() => { throw new ReferenceError('saveItem not passed to Info'); }),
+  drillSaveItem: (() => { throw new ReferenceError('drillSaveItem not passed to Info'); }),
 };
 
 export default Info;

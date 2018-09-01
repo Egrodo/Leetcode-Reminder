@@ -41,6 +41,7 @@ class App extends Component {
 
   drillSaveItem(newItem, oldItem = false) {
     // Ensure there was actually a change made.
+    console.log(newItem);
     if (newItem.link !== oldItem.link || newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
       const allData = this.state.allData.map(o => ({ ...o }));
       // Search for the oldItem, get the index.
