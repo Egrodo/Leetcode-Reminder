@@ -31,20 +31,16 @@ class App extends Component {
   }
 
   saveNewItem(item) {
+    // New item.
     this.setState((({ allData }) => {
       allData.push(item);
       return allData;
-    }), this.recalcData());
+    }), this.recalcData);
   }
 
   drillSaveItem(newItem, oldItem = false) {
-    // First ensure that there is actually a change.
-    if (!oldItem || newItem.link !== oldItem.link) {
-      this.saveNewItem(newItem);
-      return;
-    }
-
-    if (newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
+    // Ensure there was actually a change made.
+    if (newItem.link !== oldItem.link || newItem.date !== oldItem.date || newItem.notes !== oldItem.notes) {
       const allData = this.state.allData.map(o => ({ ...o }));
       // Search for the oldItem, get the index.
       for (let i = 0; i < allData.length; ++i) {
@@ -76,6 +72,8 @@ class App extends Component {
   }
 
   recalcData() {
+    console.log('recalculating');
+    // TODO: Bug that's setting the state all funky-like.
     // Function to recalc current and history.
     this.setState((({ allData }) => {
       const current = [];
