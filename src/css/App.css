@@ -1,13 +1,14 @@
 body {
-  background-color: black;
+  /* background-color: black; */
   --highlight-color: #ffa724;
+  margin: 0;
+  font-size: 1em;
 }
 
 .App {
   text-align: center;
   width: 20em;
-  margin: auto; /* DEV */
-  /* padding: 1.5em 1.5em .2em 1.5em; */
+  /* margin: auto; DEV */
   font-family: 'Roboto', sans-serif;
   background-color: #f1f1f1;
 }
@@ -33,6 +34,7 @@ svg {
 .footer {
   text-align: right;
   padding: .5em .5em .5em 0;
+  margin-bottom: 0;
   font-size: .7em;
   color: #1d1d1d;
 }
