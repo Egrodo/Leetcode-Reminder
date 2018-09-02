@@ -21,20 +21,38 @@ header.title {
   font-size: 1em;
   background-color: inherit;
   border: none;
-  border-bottom: 3px solid transparent;
+  padding-bottom: 0px;
+}
+
+.navItem::after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0;
+  background: transparent;
+  transition: width .5s, background-color .5s;
 }
 
 .navItem:hover {
   cursor: pointer;
-  border-bottom: 3px solid var(--highlight-color);
+}
+
+.navItem:hover::after {
+  width: 100%;
+  background: var(--highlight-color);
 }
 
 .navItem.active {
-  border-bottom: 3px solid var(--highlight-color);
   color: #fff;
+}
+
+.navItem.active::after {
+  width: 100%;
+  background: var(--highlight-color);
+
 }
 
 .navItem:focus {
   outline: none;
-
 }

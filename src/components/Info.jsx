@@ -29,8 +29,9 @@ class Info extends Component {
     this.drillDateChange = this.drillDateChange.bind(this);
   }
 
-  // TODO: The date display needs to be able to go into the negatives for past items.
   componentWillMount() {
+    // TODO: If currently on a Leetcode page, autofill that page.
+
     const name = getName(this.props.item.link);
     this.setState({ name, ...this.props.item });
 
