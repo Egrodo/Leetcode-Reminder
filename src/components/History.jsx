@@ -25,7 +25,6 @@ class History extends Component {
   }
 
   drillOpenInfo(infoItem) {
-    console.log(infoItem);
     this.setState({ infoItem });
   }
 

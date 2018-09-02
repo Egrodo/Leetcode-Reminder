@@ -45,3 +45,7 @@ svg {
   cursor: pointer;
   text-decoration: underline;
 }
+
+input {
+  caret-color: var(--highlight-color);
+}

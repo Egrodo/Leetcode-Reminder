@@ -17,7 +17,7 @@ class New extends Component {
   render() {
     return (
       <section className="New page">
-        <Info existing={false} saveItem={this.saveItem} />
+        <Info existing={false} drillSaveItem={this.saveItem} />
       </section>
     );
   }

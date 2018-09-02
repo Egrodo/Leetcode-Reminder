@@ -66,7 +66,7 @@ class Main extends Component {
           <Info
             item={infoItem}
             drillOpenInfo={this.drillOpenInfo}
-            saveItem={this.saveItemEdit}
+            drillSaveItem={this.saveItemEdit}
             existing
           />
         </section>

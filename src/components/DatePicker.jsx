@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isFuture, isToday, differenceInDays, addDays, format } from 'date-fns';
+import { isFuture, isToday, differenceInDays, addDays, format, isPast } from 'date-fns';
 import '../css/DatePicker.css';
 
 class DatePicker extends Component {
@@ -26,19 +26,22 @@ class DatePicker extends Component {
     // Take the initialDate and calc the days/weeks.
     const { initialDate } = this.props;
     if (initialDate === '') return;
-    if (isFuture(initialDate)) {
-      // If it's in the future, calculate the days/weeks.
-      const diffInDays = differenceInDays(initialDate, Date.now());
-      const weeks = Math.floor(diffInDays / 7);
-      const days = (diffInDays % 7) + 1;
-      this.setState({ days, weeks, date: initialDate });
-    }
+
+    // Calculate the days/weeks.
+    const diffInDays = differenceInDays(initialDate, Date.now());
+    const weeks = Math.floor(Math.abs(diffInDays / 7));
+    // If it's a negative difference (in the past) account for today.
+    const days = diffInDays > 0 ? ((diffInDays % 7) + 1) : (diffInDays % 7);
+    this.setState({ days, weeks, date: initialDate });
   }
 
   componentDidUpdate() {
     // When the component updates (ie: day/week count changes), ensure it was changed then recalc.
     const { days, weeks, date } = this.state;
-    const newDate = format(addDays(Date.now(), (+days + (+weeks * 7))), 'M/DD/YYYY');
+    // BUG: This is updating twice on firstview.
+    // BUG: Days and weeks are being swapped somewhere.
+    const dayCount = (+days + (+weeks * 7));
+    const newDate = format(addDays(Date.now(), dayCount), 'M/DD/YYYY');
     if (newDate !== date) {
       this.props.drillDateChange(days, weeks);
       this.setState({ date: newDate });
@@ -110,7 +113,7 @@ class DatePicker extends Component {
           value={days}
         />
         <span>
-          Day(s)
+          {`Day${days !== '1' ? 's' : ''}`}
         </span>
         <input
           className="dateInp"
@@ -121,7 +124,8 @@ class DatePicker extends Component {
           ref={this.weekInp}
           value={weeks}
         />
-        Week(s)
+        {`Week${weeks !== '1' ? 's' : ''}`}
+        {isPast(date) && !isToday(date) ? ' Ago' : ''}
         <header className="secondary">{dateText}</header>
       </section>
     );

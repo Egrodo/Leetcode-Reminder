@@ -67,6 +67,7 @@ class Info extends Component {
 
   drillDateChange(days, weeks) {
     // Take week and days and turn them into a date string from now.
+    // BUG: Date changes all funky when in the negatives.
     const date = format(addDays(Date.now(), (+days + (+weeks * 7))), 'M/DD/YYYY');
     this.setState({ date });
   }
