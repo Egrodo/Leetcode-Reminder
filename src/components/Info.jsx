@@ -32,6 +32,7 @@ class Info extends Component {
   componentWillMount() {
     // TODO: If currently on a Leetcode page, autofill that page.
 
+    // Implement better link solution.
     const name = getName(this.props.item.link);
     this.setState({ name, ...this.props.item });
 

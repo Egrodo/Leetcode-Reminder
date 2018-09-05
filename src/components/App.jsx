@@ -1,12 +1,19 @@
+/* global chrome */
 import React, { Component } from 'react';
 import { isPast, isToday } from 'date-fns';
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import New from './New';
 import History from './History';
-import Data from '../mock'; // NOTE: Dev
+// import Data from '../mock'; // NOTE: Dev
 import '../css/App.css';
 import Main from './Main';
+
+const syncChanges = (allData) => {
+  chrome.storage.sync.set({ allData }, () => {
+    chrome.storage.sync.get('allData', data => console.log(data));
+  });
+};
 
 class App extends Component {
   constructor() {
@@ -27,14 +34,20 @@ class App extends Component {
   }
 
   componentWillMount() {
-    // Organize data into history and current.
-    this.setState({ allData: Data }, this.recalcData);
+    // On app load, check if there's existing data. If not, set it.
+    chrome.storage.sync.get('allData', (allData) => {
+      console.log(allData);
+      if (allData.length) {
+        this.setState({ allData });
+      } else chrome.storage.sync.set({ allData: [] });
+    });
   }
 
   saveNewItem(item) {
     // New item.
     this.setState((({ allData }) => {
       allData.push(item);
+      syncChanges(allData);
       return allData;
     }), this.recalcData);
   }
@@ -48,6 +61,7 @@ class App extends Component {
         if (allData[i].link === oldItem.link) {
           // If we found it, update allData and recalc current / history.
           allData[i] = newItem;
+          syncChanges(allData);
           this.setState({ allData }, this.recalcData);
           return;
         }
@@ -65,7 +79,6 @@ class App extends Component {
           return { allData };
         }
       }
-      console.error('drillDeleteItem failed to find item');
       return null;
     }), this.recalcData);
   }

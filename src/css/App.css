@@ -48,6 +48,6 @@ svg {
   text-decoration: underline;
 }
 
-input {
+input, textarea {
   caret-color: var(--highlight-color);
 }

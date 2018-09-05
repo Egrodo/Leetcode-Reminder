@@ -1,8 +1,7 @@
 {
-  "short_name": "Leetcode",
   "name": "Leetcode Reminders",
   "description": "A Chrome extension to remind users about Leetcode problems they should revisit.",
-  "manifest_version": 3,
+  "manifest_version": 4,
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "Leetcode Reminders"
