@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { addDays, format } from 'date-fns';
-import getName from '../modules/getName';
 import DatePicker from './DatePicker';
 import '../css/Info.css';
 
@@ -32,8 +31,7 @@ class Info extends Component {
   componentWillMount() {
     // TODO: If currently on a Leetcode page, autofill that page.
 
-    // Implement better link solution.
-    const name = getName(this.props.item.link);
+    const name = this.props.item.link.split('/').pop().split('-').join(' ');
     this.setState({ name, ...this.props.item });
 
     document.addEventListener('keydown', this.onKeyDown);
@@ -76,6 +74,7 @@ class Info extends Component {
 
   saveItem() {
     // Save stuff the close the info screen.
+    // Ensure the link is properly formatted here.
     this.props.drillSaveItem(this.state, this.props.item);
     if (this.props.existing) this.props.drillOpenInfo(false);
   }

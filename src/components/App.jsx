@@ -33,12 +33,12 @@ class App extends Component {
     this.drillDeleteItem = this.drillDeleteItem.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // On app load, check if there's existing data. If not, set it.
-    chrome.storage.sync.get('allData', (allData) => {
-      console.log(allData);
-      if (allData.length) {
-        this.setState({ allData });
+    chrome.storage.sync.get('allData', (obj) => {
+      if (obj.allData) {
+        console.log('setting state');
+        this.setState({ allData: obj.allData }, this.recalcData);
       } else chrome.storage.sync.set({ allData: [] });
     });
   }
@@ -99,7 +99,6 @@ class App extends Component {
 
   recalcData() {
     // Function to recalc current and history.
-    // If this func is being called on every data change I can make my Chrome API calls here.
     this.setState((({ allData }) => {
       const current = [];
       const history = [];
