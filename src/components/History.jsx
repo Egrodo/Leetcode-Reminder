@@ -28,7 +28,6 @@ class History extends Component {
     this.setState({ infoItem });
   }
 
-  // TODO: Implement InfoBox here.
   render() {
     const { data, infoItem } = this.state;
 
@@ -49,12 +48,18 @@ class History extends Component {
     return (
       <section className="History page">
         <header className="primary">Past Challenges:</header>
-        <List
-          data={data}
-          drillOpenInfo={this.drillOpenInfo}
-          drillDoneItem={this.props.drillDoneItem}
-          drillDeleteItem={this.props.drillDeleteItem}
-        />
+        {data.length
+          ? (
+            <List
+              data={data}
+              drillOpenInfo={this.drillOpenInfo}
+              drillDoneItem={this.props.drillDoneItem}
+              drillDeleteItem={this.props.drillDeleteItem}
+            />
+          ) : (
+            <header className="secondary">No History Yet!</header>
+          )
+        }
       </section>
     );
   }

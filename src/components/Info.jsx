@@ -18,7 +18,6 @@ class Info extends Component {
 
     this.linkInput = React.createRef();
 
-
     this.saveItem = this.saveItem.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onLinkClick = this.onLinkClick.bind(this);
@@ -28,13 +27,12 @@ class Info extends Component {
     this.drillDateChange = this.drillDateChange.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // TODO: If currently on a Leetcode page, autofill that page.
-
     const name = this.props.item.link.split('/').pop().split('-').join(' ');
     this.setState({ name, ...this.props.item });
-
     document.addEventListener('keydown', this.onKeyDown);
+    this.linkInput.current.focus();
   }
 
   componentWillUnmount() {

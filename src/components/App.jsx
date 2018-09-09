@@ -10,9 +10,7 @@ import '../css/App.css';
 import Main from './Main';
 
 const syncChanges = (allData) => {
-  chrome.storage.sync.set({ allData }, () => {
-    chrome.storage.sync.get('allData', data => console.log(data));
-  });
+  chrome.storage.sync.set({ allData });
 };
 
 class App extends Component {
@@ -37,7 +35,6 @@ class App extends Component {
     // On app load, check if there's existing data. If not, set it.
     chrome.storage.sync.get('allData', (obj) => {
       if (obj.allData) {
-        console.log('setting state');
         this.setState({ allData: obj.allData }, this.recalcData);
       } else chrome.storage.sync.set({ allData: [] });
     });
